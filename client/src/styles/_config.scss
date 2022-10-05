@@ -1,0 +1,52 @@
+$grey: #eee;
+$creme: #f7f1ed;
+$dark-creme: #9e9e9e;
+$pink: #febeb0;
+$green: #3d5a5b;
+$blue: #2f365f;
+
+@mixin transition-ease {
+    transition: all 0.5s ease-in-out;
+}
+
+@function set-text-color($color) {
+    @if (lightness($color) > 40%) {
+        @return $blue;
+    } @else {
+        @return #fff;
+    }
+}
+
+@mixin media-md {
+    @media screen and (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin media-lg {
+    @media screen and (min-width: 1024px) {
+        @content;
+    }
+}
+    
+@mixin media-xl {
+    @media screen and (min-width: 1600px) {
+        @content;
+    }
+}
+
+.m-3{
+    margin: 3px;
+}
+
+.m-5{
+    margin: 5px;
+}
+
+.p-3{
+    padding: 3px;
+}
+
+.p-5{
+    padding: 5px;
+}

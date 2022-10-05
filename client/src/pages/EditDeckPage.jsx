@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import DeckForm from '../components/DeckForm'
 import { getUserDecks, reset } from '../features/decks/deckSlice'
 
-function CreateDeckPage() {
+function EditDeckPage() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -38,4 +38,4 @@ function CreateDeckPage() {
   )
 }
 
-export default CreateDeckPage
+export default EditDeckPage

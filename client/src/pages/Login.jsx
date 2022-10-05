@@ -50,14 +50,14 @@ function Login() {
   }
 
   return (
-    <>
-      <section className='heading'>
+    <section className='content-center p-5'>
+      <div className='heading text-center'>
         <h1>
           Login
         </h1>
-      </section>
+      </div>
 
-      <section className='form'>
+      <div>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <input
@@ -82,20 +82,20 @@ function Login() {
             />
           </div>
 
-          <p>
+          <p className='m-5'>
             Didn't have an account?
-            <Link to="/register"> Register </Link>
+            <Link to="/register"> <b>Register</b> </Link>
             now.
           </p>
 
           <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
+            <button type='submit' className='btn m-5'>
               Submit
             </button>
           </div>
         </form>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
 

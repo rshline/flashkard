@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import {Container} from "react-bootstrap"
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -58,14 +57,14 @@ function Register() {
   }
 
   return (
-    <Container>
+    <div className='content-center p-5'>
       <section className='heading'>
         <h1>
           Create Account
         </h1>
       </section>
 
-      <section className='form'>
+      <section>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <input
@@ -114,18 +113,18 @@ function Register() {
 
           <p>
             Already have an account?
-            <Link to="/login"> Login </Link>
+            <Link to="/login"> <b>Login</b> </Link>
             now.
           </p>
 
           <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
+            <button type='submit' className='btn m-5'>
               Submit
             </button>
           </div>
         </form>
       </section>
-    </Container>
+    </div>
   )
 }
 

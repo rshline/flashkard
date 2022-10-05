@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckForm from '../components/DeckForm'
+import FlipCard from '../components/FlipCard'
 import { getUserDecks, reset } from '../features/decks/deckSlice'
 
-function CreateDeckPage() {
+function OpenDeckPage() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -32,10 +32,9 @@ function CreateDeckPage() {
 
   return (
     <section className='content-center'>
-      <h3>Create New Deck</h3>
-      <DeckForm />
+      <FlipCard/>
     </section>
   )
 }
 
-export default CreateDeckPage
+export default OpenDeckPage

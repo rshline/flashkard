@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import DeckForm from '../components/DeckForm'
 import DeckItem from '../components/DeckItem'
 import { getUserDecks, reset } from '../features/decks/deckSlice'
-import { Container, Row, Col, Button } from 'react-bootstrap'
 
 function Dashboard() {
   const navigate = useNavigate()
@@ -33,34 +32,29 @@ function Dashboard() {
 
 
   return (
-    <Container>
-        <Row>
-            <Col>
-                <h3>Hello, {user && user.name}!</h3>
-                <Link to="/create">
-                    <Button variant="outline-primary" size="lg" type='submit'>
-                        Create Deck
-                    </Button>                
-                </Link>            
-            </Col>
-        </Row>
+    <section className='dashboard'>
+        <div className='title'>
+          <h3>Hello, {user && user.name}.</h3>
+          <h1>Create your own flashcards with Flashkard.</h1>
+          <Link to="/create">
+            <button className='btn' type='submit'>
+                Create Deck
+            </button>                
+          </Link>            
+        </div>
 
-        <Row>
-            <Col>
-                {decks.length > 0 ? (
-                    <div className='decks'>
-                    {decks.map((deck) => (
-                        <DeckItem key={deck._id} deck={deck} />
-                    ))}
-                    </div>
-                ) : (
-                    <p>You haven't created a deck.</p>
-                )}              
-            </Col>
-                
-        </Row>
-
-    </Container>
+        <div className='grid-container'>
+          {decks.length > 0 ? (
+              <div className='decks'>
+              {decks.map((deck) => (
+                  <DeckItem key={deck._id} deck={deck} />
+              ))}
+              </div>
+          ) : (
+              <p>You haven't created a deck.</p>
+          )}               
+        </div>
+    </section>
 
   )
 }

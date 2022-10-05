@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;600;700&display=swap');
+
+@import 'config';
+@import 'responsive';
+@import 'buttons';
+@import 'form';
+
+* {
+  font-family: 'Merriweather', serif !important;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $creme;
+  color: set-text-color($creme);
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+a {
+  color: $blue;
+  text-decoration: none;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 0.5rem 3rem;
+  border-bottom: $blue 1px solid;
+  background-color: $creme;
+
+  display: flex;
+  justify-content: space-between;
+
+  .nav-brand{
+    font-weight: 600;
+    font-size:x-large;
+  }
+}
+
+footer {
+  background-color: $blue;
+  color: set-text-color($blue);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+}
+
+.content-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  text-align: center;
+}
+
+.dashboard {
+  padding: 1rem;
+  position: relative;
+
+  .title {
+    text-align: center;
+    h3 {
+      color: grey;
+      font-weight: 500;
+      margin: 0 !important;
+    }
+  }
+
+  .grid-container {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem;
+  }
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 1rem;
+  width:30%;
+
+  .title {
+    font-weight: 700;
+    font-size: x-large;
+    text-align: left;
+
+  }
+
+  .subtitle {
+    font-weight: 600;
+    font-size: medium;
+    color: $dark-creme;
+    margin-bottom: 10px;
+  }
+
+  .card-action {
+    display: flex;
+    justify-content: end;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+  }
+}
+
+.text-center{
+  text-align: center;
+}
