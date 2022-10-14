@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckForm from '../components/DeckForm'
-import { getUserDecks, reset } from '../features/decks/deckSlice'
+import EditDeck from '../../components/EditDeck'
+import { getDeck, updateDeck, reset } from '../../features/decks/deckSlice'
 
-function CreateDeckPage() {
+function EditDeckPage() {
+
+  const { deckId } = useParams()
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -22,8 +25,8 @@ function CreateDeckPage() {
       navigate('/login')
     }
 
-    dispatch(getUserDecks())
-
+    dispatch(getDeck(deckId))
+    
     return () => {
       dispatch(reset())
     }
@@ -32,10 +35,10 @@ function CreateDeckPage() {
 
   return (
     <section className='content-center'>
-      <h3>Create New Deck</h3>
-      <DeckForm />
+      <h3>Edit Deck</h3>
+      <EditDeck key={decks._id} deck={decks} />
     </section>
   )
 }
 
-export default CreateDeckPage
+export default EditDeckPage

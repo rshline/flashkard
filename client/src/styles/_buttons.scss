@@ -1,9 +1,8 @@
-@mixin buttonBase($border-radius) {
-    padding: 10px;
-    border-radius: $border-radius;
-    border: $blue 1px solid;
+@mixin buttonBase {
+    padding: 7px;
     background: #fff;
     color: $blue;
+    align-items: center;
 
     &:hover{
         cursor: pointer;
@@ -14,9 +13,18 @@
 }
 
 .btn{
-    @include buttonBase(5px)
+    @include buttonBase;
+
+    border-radius: 5px;
+    border: $blue 1px solid;
+
 }
   
-.btn-round {
-    @include buttonBase(50%)
+.btn-icon {
+    @include buttonBase;
+    border: none;
+
+    &:hover{
+        border-radius: 50%;
+    }
 }

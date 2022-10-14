@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckForm from '../components/DeckForm'
-import { getUserDecks, reset } from '../features/decks/deckSlice'
+import DeckForm from '../../components/DeckForm'
+import { getUserDecks, reset } from '../../features/decks/deckSlice'
 
-function EditDeckPage() {
+function CreateDeckPage() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -38,4 +38,4 @@ function EditDeckPage() {
   )
 }
 
-export default EditDeckPage
+export default CreateDeckPage

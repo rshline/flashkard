@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckForm from '../components/DeckForm'
-import DeckItem from '../components/DeckItem'
+import DeckCard from '../components/DeckCard'
 import { getUserDecks, reset } from '../features/decks/deckSlice'
 
 function Dashboard() {
@@ -35,7 +34,7 @@ function Dashboard() {
     <section className='dashboard'>
         <div className='title'>
           <h3>Hello, {user && user.name}.</h3>
-          <h1>Create your own flashcards with Flashkard.</h1>
+          <h1>Create your own flashcards now.</h1>
           <Link to="/create">
             <button className='btn' type='submit'>
                 Create Deck
@@ -43,17 +42,19 @@ function Dashboard() {
           </Link>            
         </div>
 
-        <div className='grid-container'>
+        <div className='m-5 p-5'>
           {decks.length > 0 ? (
-              <div className='decks'>
+              <div className='grid-container'>
               {decks.map((deck) => (
-                  <DeckItem key={deck._id} deck={deck} />
+                  <DeckCard key={deck._id} deck={deck} />
               ))}
               </div>
           ) : (
-              <p>You haven't created a deck.</p>
-          )}               
+              <p className='text-center m-5 p-5'>You haven't created a deck.</p>
+          )}             
         </div>
+ 
+
     </section>
 
   )

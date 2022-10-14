@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import FlipCard from '../components/FlipCard'
-import { getUserDecks, reset } from '../features/decks/deckSlice'
+import FlipCard from '../../components/FlipCard'
+import { getDeck, reset } from '../../features/decks/deckSlice'
 
 function OpenDeckPage() {
+  const { deckId } = useParams()
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -22,7 +24,7 @@ function OpenDeckPage() {
       navigate('/login')
     }
 
-    dispatch(getUserDecks())
+    dispatch(getDeck(deckId))
 
     return () => {
       dispatch(reset())
@@ -33,6 +35,7 @@ function OpenDeckPage() {
   return (
     <section className='content-center'>
       <FlipCard/>
+      {decks.title}
     </section>
   )
 }

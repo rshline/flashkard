@@ -49,7 +49,7 @@ const updateDeck = async (deckId, deckData, token) => {
     },
   }
 
-  const response = await axios.post(API_URL + deckId, deckData, config)
+  const response = await axios.put(API_URL + deckId, deckData, config)
 
   return response.data
 }

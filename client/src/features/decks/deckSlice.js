@@ -66,6 +66,25 @@ export const getDeck = createAsyncThunk(
   }
 )
 
+//Edit user deck
+export const updateDeck = createAsyncThunk(
+  'decks/update',
+  async (deckId, deckData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await deckService.updateDeck(deckId, deckData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 // Delete user deck
 export const deleteDeck = createAsyncThunk(
   'decks/delete',
@@ -128,6 +147,19 @@ export const deckSlice = createSlice({
         state.decks = action.payload
       })
       .addCase(getDeck.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateDeck.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateDeck.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.decks.push(action.payload)
+      })
+      .addCase(updateDeck.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

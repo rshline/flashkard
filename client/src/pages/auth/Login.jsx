@@ -2,17 +2,15 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { register, reset } from '../features/auth/authSlice'
+import { login, reset } from '../../features/auth/authSlice'
 
-function Register() {
+function Login() {
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: '',
-    password2: '',
   })
 
-  const { name, email, password, password2 } = formData
+  const { email, password } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -43,40 +41,24 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if (password !== password2) {
-      toast.error('Passwords do not match')
-    } else {
-      const userData = {
-        name,
-        email,
-        password,
-      }
-
-      dispatch(register(userData))
+    const userData = {
+      email,
+      password,
     }
+
+    dispatch(login(userData))
   }
 
   return (
-    <div className='content-center p-5'>
-      <section className='heading'>
+    <section className='content-center p-5'>
+      <div className='heading text-center'>
         <h1>
-          Create Account
+          Login
         </h1>
-      </section>
+      </div>
 
-      <section>
+      <div>
         <form onSubmit={onSubmit}>
-          <div className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              id='name'
-              name='name'
-              value={name}
-              placeholder='Enter your name'
-              onChange={onChange}
-            />
-          </div>
           <div className='form-group'>
             <input
               type='email'
@@ -99,21 +81,10 @@ function Register() {
               onChange={onChange}
             />
           </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password2'
-              name='password2'
-              value={password2}
-              placeholder='Confirm password'
-              onChange={onChange}
-            />
-          </div>
 
-          <p>
-            Already have an account?
-            <Link to="/login"> <b>Login</b> </Link>
+          <p className='m-5'>
+            Didn't have an account?
+            <Link to="/register"> <b>Register</b> </Link>
             now.
           </p>
 
@@ -123,9 +94,10 @@ function Register() {
             </button>
           </div>
         </form>
-      </section>
-    </div>
+      </div>
+    </section>    
+
   )
 }
 
-export default Register
+export default Login

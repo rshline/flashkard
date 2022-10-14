@@ -48,25 +48,26 @@ header {
 footer {
   background-color: $blue;
   color: set-text-color($blue);
-  position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
   padding: 1rem;
   text-align: center;
+  position: block;
 }
 
 .content-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 82vh;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
 .dashboard {
   padding: 1rem;
-  position: relative;
+  min-height: 100vh;
 
   .title {
     text-align: center;
@@ -78,21 +79,28 @@ footer {
   }
 
   .grid-container {
+    margin: auto;
+    padding: 0;
+    width: 80vw;
+    left: 50%;
+
     display: grid;
-    gap: 1rem;
-    margin: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 20px;
+    justify-content: center;
+
   }
 }
 
 .card {
   background-color: #fff;
   border-radius: 5px;
-  padding: 1rem;
-  width:30%;
+  padding: 0.5rem 1rem;
+  margin: 5px;
 
   .title {
     font-weight: 700;
-    font-size: x-large;
+    font-size:xx-large;
     text-align: left;
 
   }
@@ -104,17 +112,25 @@ footer {
     margin-bottom: 10px;
   }
 
-  .card-action {
-    display: flex;
-    justify-content: end;
-  }
-
   &:hover {
     background-color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
   }
 }
 
 .text-center{
   text-align: center;
+}
+
+.space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.justify-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
