@@ -47,6 +47,44 @@ export const getCards = createAsyncThunk(
   }
 )
 
+// Create new card
+export const updateCard = createAsyncThunk(
+  'cards/update',
+  async (id, cardData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await cardService.updateCard(id, cardData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Get card by id
+export const getCard = createAsyncThunk(
+  'cards/getCard',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await cardService.getCard(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 // Delete user card
 export const deleteCard = createAsyncThunk(
   'cards/delete',
@@ -96,6 +134,32 @@ export const cardSlice = createSlice({
         state.cards = action.payload
       })
       .addCase(getCards.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateCard.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateCard.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.cards.push(action.payload)
+      })
+      .addCase(updateCard.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getCard.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getCard.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.cards = action.payload
+      })
+      .addCase(getCard.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

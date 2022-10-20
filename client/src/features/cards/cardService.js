@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/cards/'
+const API_URL = '/api/decks/cards'
 
 // Create new card
 const createCard = async (cardData, token) => {
@@ -28,6 +28,32 @@ const getCards = async (token) => {
   return response.data
 }
 
+// Update  card
+const updateCard = async (cardId, cardData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.put(API_URL + cardId, cardData, config)
+
+  return response.data
+}
+
+// Get Card
+const getCard = async (cardId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.get(API_URL + cardId, config)
+
+  return response.data
+}
+
 // Delete user User
 const deleteCard = async (cardId, token) => {
   const config = {
@@ -44,6 +70,8 @@ const deleteCard = async (cardId, token) => {
 const cardService = {
   createCard,
   getCards,
+  getCard, 
+  updateCard,
   deleteCard,
 }
 

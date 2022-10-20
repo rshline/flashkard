@@ -4,14 +4,14 @@ const Card = require('../models/cardModel');
 const Deck = require('../models/deckModel');
 
 // @desc    Get cards
-// @route   GET /api/decks/:deckId/cards
+// @route   GET /api/decks/:deckId
 // @access  Public
 
 const getCards = asyncHandler(
     async (req, res) => {
 
         const cards = await Card.find({
-            deck: req.params.deck
+            deck: req.body.deck
         });
 
         res.status(200)
@@ -20,20 +20,39 @@ const getCards = asyncHandler(
 
 )
 
-
-// @desc    Create cards
-// @route   POST /api/decks/:deck/cards
+// @desc    Get card by id
+// @route   GET /api/decks/:deck/:cardId
 // @access  Private
-
-const createCard = asyncHandler(
+const getCard = asyncHandler(
     async (req, res) => {
 
-        const deck = await Deck.findById(req.params.deck);
+        const deck = await Deck.findById(req.body.deck)
 
         if (!deck) {
             res.status(400)
             throw new Error('Deck not found')
         }
+
+        const card = await Card.findById(req.params.cardId)
+
+        if (!card) {
+            res.status(400)
+            throw new Error('Card not found')
+        }
+
+        res.status(200)
+            .json(card)
+    }
+
+)
+
+
+// @desc    Create cards
+// @route   POST /api/decks/:deck
+// @access  Private
+
+const createCard = asyncHandler(
+    async (req, res) => {
 
         if (!req.body.def || !req.body.term) {
             res.status(400)
@@ -41,7 +60,7 @@ const createCard = asyncHandler(
         }
 
         const card = await Card.create({
-            deck: req.params.deck,
+            deck: req.body.deck,
             def: req.body.def,
             term: req.body.term,
             imgURL: req.body.imgURL,
@@ -49,11 +68,10 @@ const createCard = asyncHandler(
 
         const total = deck.totalCard;
 
-        await Deck.findByIdAndUpdate(
-            req.params.deck,
-            {
-                totalCard: total + 1
-            }).exec()
+        await Deck.findByIdAndUpdate({
+            _id: card.deck,
+            totalCard: total + 1
+        }).exec()
 
         res.status(200).json(card)
     }
@@ -62,19 +80,19 @@ const createCard = asyncHandler(
 
 
 // @desc    Update card
-// @route   PUT /api/decks/:deck/cards/:cardId
+// @route   PUT /api/decks/:deck/:cardId
 // @access  Private
 const updateCard = asyncHandler(
     async (req, res) => {
 
-        const deck = await Deck.findById(req.params.deck)
+        const deck = await Deck.findById(req.body.deck)
 
         if (!deck) {
             res.status(400)
             throw new Error('Deck not found')
         }
 
-        const card = await Card.findById(req.params.CardId)
+        const card = await Card.findById(req.params.cardId)
 
         if (!card) {
             res.status(400)
@@ -82,7 +100,7 @@ const updateCard = asyncHandler(
         }
 
         const updatedCard = await Card.findByIdAndUpdate(
-            req.params.CardId,
+            req.params.cardId,
             req.body,
             { new: true }
         )
@@ -95,13 +113,13 @@ const updateCard = asyncHandler(
 
 
 // @desc    Delete Card
-// @route   DELETE /api/decks/:deck/cards/:cardId
+// @route   DELETE /api/decks/:deck/:cardId
 // @access  Private
 
 const deleteCard = asyncHandler(
     async (req, res) => {
 
-        const deck = await Deck.findById(req.params.deck)
+        const deck = await Deck.findById(req.body.deck)
 
         if (!deck) {
             res.status(400)
@@ -120,7 +138,7 @@ const deleteCard = asyncHandler(
         const total = deck.totalCard
 
         await Deck.findByIdAndUpdate(
-            req.params.deck,
+            req.body.deck,
             {
                 totalCard: total - 1
             }).exec()
@@ -135,6 +153,7 @@ const deleteCard = asyncHandler(
 
 module.exports = {
     getCards,
+    getCard,
     createCard,
     updateCard,
     deleteCard

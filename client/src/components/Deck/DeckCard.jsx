@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { getDeck, deleteDeck } from '../features/decks/deckSlice'
+import { getDeck, deleteDeck } from '../../features/decks/deckSlice'
 import { FaPenAlt, FaTrash, FaPlay } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 

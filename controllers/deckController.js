@@ -18,6 +18,9 @@ const getDecks = asyncHandler(async (req, res) => {
   res.status(200).json(decks)
 })
 
+// @desc    Get decks
+// @route   GET /api/decks/id
+// @access  Private
 const getDeck = asyncHandler(async (req, res) => {
   const deck = await Deck.findById(req.params.id)
 
@@ -25,7 +28,7 @@ const getDeck = asyncHandler(async (req, res) => {
 })
 
 // @desc    Set decks
-// @route   POST /api/deckss
+// @route   POST /api/decks
 // @access  Private
 const setDeck = asyncHandler(async (req, res) => {
   if (!req.body.title || !req.body.topic) {
@@ -33,14 +36,19 @@ const setDeck = asyncHandler(async (req, res) => {
     throw new Error('The field must be filled!')
   }
 
-  const deck = await Deck.create({
-    user: req.user.id,
-    title: req.body.title,
-    topic: req.body.topic,
-    totalCard: 0,
-  })
+  try {
+    const deck = await Deck.create({
+      user: req.user.id,
+      title: req.body.title,
+      topic: req.body.topic,
+      totalCard: 0,
+    })
 
-  res.status(200).json(deck)
+    res.status(200).json(deck)
+  } catch (err) {
+    res.status(400).json(err.message)
+  }
+  
 })
 
 // @desc    Update deck

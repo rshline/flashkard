@@ -4,8 +4,8 @@ const cardSchema = new mongoose.Schema(
   {
     deck: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'Deck',
+      required: true,
     },
     def: {
       type: String,

@@ -1,28 +1,23 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { updateDeck, isError, isSuccess, message } from '../features/decks/deckSlice'
+import { createDeck } from '../../features/decks/deckSlice'
 import {Button} from 'react-bootstrap';
-import { useEffect } from 'react';
 
-function EditDeck({ deck }) {
-
-  const [title, setTitle] = useState(deck.title)
-  const [topic, setTopic] = useState(deck.topic)
-  const [totalCard, setTotalCard] = useState(deck.totalCard)
+function DeckForm() {
+  const [title, setTitle] = useState('')
+  const [topic, setTopic] = useState('')
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(updateDeck( deck._id, (
-        title,
-        topic,
-        totalCard
-      ))
-    )    
 
+    dispatch(createDeck({ title, topic }))
+    setTitle('')
+    setTopic('')
+    navigate('/')
   }
 
   return (
@@ -49,13 +44,13 @@ function EditDeck({ deck }) {
           />
         </div>
         <div className='form-group'>
-          <Button variant="outline-primary" size="lg" type='submit'>
-            Edit Deck
-          </Button>
+          <button className='btn' size="lg" type='submit'>
+            Create Deck
+          </button>
         </div>
       </form>
     </section>
   )
 }
 
-export default EditDeck
+export default DeckForm

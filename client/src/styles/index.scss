@@ -12,9 +12,10 @@
   padding: 0;
 }
 
-body {
+html, body {
   background: $creme;
   color: set-text-color($creme);
+  height: 100%;
 }
 
 h1, h2, h3 {
@@ -132,5 +133,21 @@ footer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
+}
+
+.justify-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-border{
+  background-color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem;
   align-items: center;
 }

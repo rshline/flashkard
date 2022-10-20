@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckForm from '../../components/DeckForm'
+import DeckForm from '../../components/Deck/DeckForm'
 import { getUserDecks, reset } from '../../features/decks/deckSlice'
 
 function CreateDeckPage() {
@@ -9,14 +9,8 @@ function CreateDeckPage() {
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { decks, isError, message } = useSelector(
-    (state) => state.decks
-  )
 
   useEffect(() => {
-    if (isError) {
-      console.log(message)
-    }
 
     if (!user) {
       navigate('/login')
@@ -27,7 +21,7 @@ function CreateDeckPage() {
     return () => {
       dispatch(reset())
     }
-  }, [user, navigate, isError, message, dispatch])
+  }, [user, navigate, dispatch])
 
 
   return (

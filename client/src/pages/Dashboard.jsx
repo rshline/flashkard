@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckCard from '../components/DeckCard'
+import DeckCard from '../components/Deck/DeckCard'
 import { getUserDecks, reset } from '../features/decks/deckSlice'
 
 function Dashboard() {
