@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import DeckCard from '../components/Deck/DeckCard'
+import DeckItem from '../components/Deck/DeckItem'
 import { getUserDecks, reset } from '../features/decks/deckSlice'
 
 function Dashboard() {
@@ -46,15 +46,13 @@ function Dashboard() {
           {decks.length > 0 ? (
               <div className='grid-container'>
               {decks.map((deck) => (
-                  <DeckCard key={deck._id} deck={deck} />
+                  <DeckItem key={deck._id} deck={deck} />
               ))}
               </div>
           ) : (
               <p className='text-center m-5 p-5'>You haven't created a deck.</p>
           )}             
         </div>
- 
-
     </section>
 
   )

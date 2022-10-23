@@ -7,26 +7,20 @@ const Deck = require('../models/deckModel');
 // @route   GET /api/decks/:deckId
 // @access  Public
 
-const getCards = asyncHandler(
-    async (req, res) => {
+const getCards = asyncHandler(async (req, res) => {
 
-        const cards = await Card.find({
-            deck: req.body.deck
-        });
+    const cards = await Card.find({ deck: req.params.id })
 
-        res.status(200)
-            .json(cards)
-    }
-
-)
+    res.status(200).json(cards)
+})
 
 // @desc    Get card by id
-// @route   GET /api/decks/:deck/:cardId
+// @route   GET /api/decks/cards/:cardId
 // @access  Private
 const getCard = asyncHandler(
     async (req, res) => {
 
-        const deck = await Deck.findById(req.body.deck)
+        const deck = await Deck.findById(req.params.id)
 
         if (!deck) {
             res.status(400)
@@ -66,14 +60,21 @@ const createCard = asyncHandler(
             imgURL: req.body.imgURL,
         });
 
-        const total = deck.totalCard;
+        await Deck.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                 $inc : {'totalCard': 1},
+                 $push: { cards: card}
+            },
+            { new: true },
+            function(err){
+                if (err) {
+                    console.log(err)
+                }
+            }
+        ).exec()
 
-        await Deck.findByIdAndUpdate({
-            _id: card.deck,
-            totalCard: total + 1
-        }).exec()
-
-        res.status(200).json(card)
+        res.status(200).json({message: 'Card Added'})
     }
 
 )
@@ -85,7 +86,7 @@ const createCard = asyncHandler(
 const updateCard = asyncHandler(
     async (req, res) => {
 
-        const deck = await Deck.findById(req.body.deck)
+        const deck = await Deck.findById(req.params.id)
 
         if (!deck) {
             res.status(400)
@@ -119,29 +120,33 @@ const updateCard = asyncHandler(
 const deleteCard = asyncHandler(
     async (req, res) => {
 
-        const deck = await Deck.findById(req.body.deck)
+        const deck = await Deck.findById(req.params.id)
 
         if (!deck) {
             res.status(400)
             throw new Error('Deck not found')
         }
 
-        const card = Card.findById(req.params.cardId)
+        await Card.find(
+            { id: req.params.cardId },
+            function(err){
+                if(err){
+                    console.log(err)
+            }
+        }).remove().exec()
 
-        if (!card) {
-            res.status(400)
-            throw new Error('Card not found')
-        }
-
-        await card.deleteOne()
-
-        const total = deck.totalCard
-
-        await Deck.findByIdAndUpdate(
-            req.body.deck,
+        await Deck.findOneAndUpdate(
+            { _id: req.params.id },
             {
-                totalCard: total - 1
-            }).exec()
+                $inc : {'totalCard': -1},
+                $pullAll : { '_id' : [req.params.cardId]}
+            },
+            { new: true },
+            function(err){
+                if(err){
+                    console.log(err)
+                }
+        }).exec()
 
         res.status(200)
             .json({

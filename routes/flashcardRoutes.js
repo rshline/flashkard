@@ -24,7 +24,7 @@ router.route('/all').get(getDecks)
 router.route('/:id').get(getDeck).delete(protect, deleteDeck).put(protect, updateDeck)
 
 //cards
-router.route('/cards').get(getCards).post(protect, createCard)
-router.route('/cards/:cardId').get(getCard).put(protect, updateCard).delete(protect, deleteCard)
+router.route('/:id/cards').get(getCards).post(protect, createCard)
+router.route('/:id/cards/:cardId').get(getCard).put(protect, updateCard).delete(protect, deleteCard)
 
 module.exports = router

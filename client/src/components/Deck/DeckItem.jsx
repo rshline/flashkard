@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux'
-import { getDeck, deleteDeck } from '../../features/decks/deckSlice'
+import { deleteDeck } from '../../features/decks/deckSlice'
 import { FaPenAlt, FaTrash, FaPlay } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-function DeckCard({ deck }) {
+function DeckItem({ deck }) {
   const dispatch = useDispatch()
 
   return (
@@ -38,4 +38,4 @@ function DeckCard({ deck }) {
   )
 }
 
-export default DeckCard
+export default DeckItem

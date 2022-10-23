@@ -55,14 +55,14 @@ const updateDeck = async (deckId, deckData, token) => {
 }
 
 // Delete user User
-const deleteDeck = async (deckId, token) => {
+const deleteDeck = async (id, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
 
-  const response = await axios.delete(API_URL + deckId, config)
+  const response = await axios.delete(API_URL + id, config)
 
   return response.data
 }

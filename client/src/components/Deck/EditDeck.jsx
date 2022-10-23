@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { updateDeck, isError, isSuccess, message } from '../../features/decks/deckSlice'
-import { useEffect } from 'react';
+import { updateDeck } from '../../features/decks/deckSlice'
 
 function EditDeck({ deck }) {
 
@@ -12,10 +11,6 @@ function EditDeck({ deck }) {
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
-
-  const { decks, isError, message} = useSelector(
-    (state) => state.decks
-  )
 
   const onSubmit = (e) => {
     e.preventDefault()

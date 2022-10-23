@@ -80,9 +80,11 @@ const updateDeck = asyncHandler(async (req, res) => {
     throw new Error('User not authorized')
   }
 
-  const updatedDeck = await Deck.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  })
+  const updatedDeck = await Deck.findOneAndUpdate(
+    {_id: req.params.id}, 
+    req.body, 
+    { new: true}
+  ).exec()
 
   res.status(200).json(updatedDeck)
 })
@@ -91,26 +93,30 @@ const updateDeck = asyncHandler(async (req, res) => {
 // @route   DELETE /api/decks/:id
 // @access  Private
 const deleteDeck = asyncHandler(async (req, res) => {
-  const deck = await Deck.findById(req.params.id)
 
-  if (!deck) {
-    res.status(400)
-    throw new Error('Deck not found')
-  }
-
-  // Check for user
   if (!req.user) {
     res.status(401)
     throw new Error('User not found')
   }
 
-  // Make sure the logged in user matches the deck user
+  const deck = await Deck.findById(req.params.id)
+
+  if(!deck){
+    console.log('Deck not found')
+  }
+
   if (deck.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error('User not authorized')
   }
 
-  await deck.remove()
+  Card.deleteMany({deck: req.params.id}, function(err) {
+    if(err){
+      console.log(err)
+    }
+  }).exec()
+
+  deck.remove().exec()
 
   res.status(200).json({ id: req.params.id })
 })

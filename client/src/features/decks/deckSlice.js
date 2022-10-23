@@ -157,7 +157,7 @@ export const deckSlice = createSlice({
       .addCase(updateDeck.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.decks.push(action.payload)
+        state.message = action.payload
       })
       .addCase(updateDeck.rejected, (state, action) => {
         state.isLoading = false

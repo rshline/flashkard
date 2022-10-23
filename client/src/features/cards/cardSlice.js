@@ -31,10 +31,9 @@ export const createCard = createAsyncThunk(
 // Get user card
 export const getCards = createAsyncThunk(
   'cards/getCards',
-  async (_, thunkAPI) => {
+  async (deckId, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await cardService.getCards(token)
+      return await cardService.getCards(deckId)
     } catch (error) {
       const message =
         (error.response &&
@@ -50,10 +49,10 @@ export const getCards = createAsyncThunk(
 // Create new card
 export const updateCard = createAsyncThunk(
   'cards/update',
-  async (id, cardData, thunkAPI) => {
+  async (deckId, cardId, cardData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await cardService.updateCard(id, cardData, token)
+      return await cardService.updateCard(deckId, cardId, cardData, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -69,10 +68,10 @@ export const updateCard = createAsyncThunk(
 // Get card by id
 export const getCard = createAsyncThunk(
   'cards/getCard',
-  async (id, thunkAPI) => {
+  async (deckId, cardId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await cardService.getCard(id, token)
+      return await cardService.getCard(deckId, cardId, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -88,10 +87,10 @@ export const getCard = createAsyncThunk(
 // Delete user card
 export const deleteCard = createAsyncThunk(
   'cards/delete',
-  async (id, thunkAPI) => {
+  async (deckId, cardId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await cardService.deleteCard(id, token)
+      return await cardService.deleteCard(deckId, cardId, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -118,7 +117,7 @@ export const cardSlice = createSlice({
       .addCase(createCard.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.cards.push(action.payload)
+        state.message = action.payload
       })
       .addCase(createCard.rejected, (state, action) => {
         state.isLoading = false

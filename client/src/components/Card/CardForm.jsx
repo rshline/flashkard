@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createDeck } from '../../features/decks/deckSlice'
-import {Button} from 'react-bootstrap';
+import { createCard } from '../../features/cards/cardSlice'
 
-function CardForm() {
+function CardForm({ deck }) {
+
   const [def, setDef] = useState('')
   const [term, setTerm] = useState('')
 
@@ -14,7 +14,7 @@ function CardForm() {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    dispatch(createDeck({ def, term }))
+    dispatch(createCard({deck, def, term }))
     setDef('')
     setTerm('')
   }

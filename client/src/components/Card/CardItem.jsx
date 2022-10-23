@@ -1,21 +1,20 @@
 import { useDispatch } from 'react-redux'
-import { getDeck, deleteCard } from '../../features/cards/cardSlice'
-import { FaPenAlt, FaTrash, FaPlay } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { deleteCard } from '../../features/cards/cardSlice'
+import { FaTrash } from 'react-icons/fa';
 
 function CardItem({ card }) {
   const dispatch = useDispatch()
 
   return (
     <div className='card'>
-      <div className='card-content'>
-        <p className='title'>{card.def}</p>
-        <p className='title'>{card.term}</p>       
+      <div className='justify-center'>
+        <h4 className='def'>{card.def}</h4>
+        <h4 className='term'>{card.term}</h4>       
       </div>
 
-      <div className='space-between mt-5 p-5'>
+      <div className='p-5 justify-end'>
 
-        <button onClick={() => dispatch(deleteCard(card._id))} className='btn-icon mt-5 p-5'>
+        <button onClick={() => dispatch(deleteCard(card.deck, card._id))} className='btn-icon mt-5 p-5'>
           <FaTrash color="#A42821" fontSize="16px" />        
         </button>
       </div>

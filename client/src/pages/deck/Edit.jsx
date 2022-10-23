@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import EditDeck from '../../components/Deck/EditDeck'
 import CardForm from '../../components/Card/CardForm'
 import { getDeck, reset } from '../../features/decks/deckSlice'
+import { getCards, reset as cardReset } from '../../features/cards/cardSlice'
 import { FaPenAlt } from "react-icons/fa";
 import { AiFillCloseCircle, AiFillPlusCircle } from "react-icons/ai";
 import CardItem from '../../components/Card/CardItem'
@@ -11,17 +12,25 @@ import CardItem from '../../components/Card/CardItem'
 
 function EditDeckPage() {
 
+  const { deckId } = useParams()
   const [isCreate, setIsCreate] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-
-  const { deckId } = useParams()
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
+  
   const { decks, isError, message } = useSelector(
     (state) => state.decks
+  )
+
+  const { 
+    cards, 
+    isError:cardError, 
+    message: cardMessage 
+  } = useSelector(
+    (state) => state.cards
   )
 
   const handleEditClick = event => {
@@ -43,16 +52,22 @@ function EditDeckPage() {
       console.log(message)
     }
 
+    if (cardError) {
+      console.log(message)
+    }
+
     if (!user) {
       navigate('/login')
     }
 
     dispatch(getDeck(deckId))
+    dispatch(getCards(deckId))
     
     return () => {
       dispatch(reset())
+      dispatch(cardReset())
     }
-  }, [user, deckId, navigate, isError, message, dispatch])
+  }, [navigate, dispatch, user, deckId, isError, message, cardError, cardMessage])
 
 
   return (
@@ -74,7 +89,6 @@ function EditDeckPage() {
             <p>Total Card: {decks.totalCard}</p>
             <p>{new Date(decks.createdAt).toLocaleDateString()}</p>
           </div>
-
         )}        
       </div>
       
@@ -83,7 +97,7 @@ function EditDeckPage() {
             <div onClick={handleCreateClick}>
               {addButtonToggle}
             </div>
-            <CardForm />
+            <CardForm key={decks._id} deck={decks._id}/>
           </div>
         ): (
           <div className='justify-center'>
@@ -96,8 +110,11 @@ function EditDeckPage() {
       
       <div>
         {decks.totalCard > 0 ? (
-
-            <CardItem />
+          <div className='grid-container'>
+            {cards.map((card) => (
+              <CardItem key={card._id} card={card} />
+            ))}
+          </div>
           ) : (
             <p className='text-center m-5 p-5'>You haven't created a card in this deck.</p>
           )}  
